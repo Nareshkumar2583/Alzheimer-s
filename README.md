@@ -86,6 +86,7 @@ Processes high-frequency behavioral data for accurate analysis.
 - Spring Boot
 - Java
 - REST APIs
+- Fast Api
 
 **Machine Learning**
 - Python
@@ -105,6 +106,8 @@ Processes high-frequency behavioral data for accurate analysis.
 
 ---
 
+
+
 ## How It Works
 
 1. The patient performs interactive cognitive tasks through the application.
@@ -114,6 +117,98 @@ Processes high-frequency behavioral data for accurate analysis.
 5. The system generates a **Severity Index** and visual reports for clinicians.
 
 ---
+# 🔗 FastAPI ↔ Spring Boot Integration Guide
+
+## 🎯 Objective
+
+Connect **Spring Boot backend** with **FastAPI ML server** so that:
+
+* Spring Boot sends input data
+* FastAPI processes ML model
+* FastAPI returns prediction
+* Spring Boot uses response
+
+---
+
+# ⚙️ STEP 1: RUN FASTAPI SERVER
+
+📁 Navigate to ML folder:
+
+```
+cd ML_Files
+```
+
+▶️ Start FastAPI:
+
+```
+uvicorn main:app --reload
+```
+
+✅ Runs on:
+
+```
+http://127.0.0.1:8000
+```
+
+📌 Test in browser:
+
+```
+http://127.0.0.1:8000/docs
+```
+
+---
+
+# ⚙️ STEP 2: RUN SPRING BOOT
+
+📁 Go to backend:
+
+```
+backend1
+```
+
+▶️ Run:
+
+```
+mvnw.cmd spring-boot:run
+```
+
+✅ Runs on:
+
+```
+http://localhost:8080
+```
+
+---
+
+# ⚙️ STEP 5: TEST CONNECTION
+
+### 🔹 Call Spring Boot API:
+
+```
+POST http://localhost:8080/api/predict
+```
+
+# 🔄 FLOW
+
+```
+Spring Boot → FastAPI → ML Model → Response → Spring Boot
+```
+
+---
+
+# 🚨 IMPORTANT NOTES
+
+* Always start **FastAPI first**
+* Use URL:
+
+  ```
+  http://127.0.0.1:8000/predict
+  ```
+* Ensure both servers are running
+* Input fields must match exactly in both sides
+
+---
+
 
 ## Future Improvements
 
