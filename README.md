@@ -1,135 +1,70 @@
-# Quantifying Neurocognitive Decline
+# Getting Started with Create React App
 
-## Overview
-Quantifying Neurocognitive Decline is an AI-driven platform designed to stage the progression of Alzheimer’s Disease using digital biomarkers. Traditional clinical assessments often fail to detect subtle cognitive changes in the early stages.
-This system integrates gamified spatial navigation tasks and linguistic analysis to capture behavioral signals that indicate neurocognitive decline. By analyzing high-frequency performance data such as path efficiency, decision latency, and semantic fluency, the platform generates a longitudinal **Severity Index** to assist clinicians in diagnosis and monitoring.
-The project combines a **Spring Boot backend** with a **Python-based machine learning engine**, enabling predictive analysis and continuous monitoring of cognitive health.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
----
+## Available Scripts
 
-## Problem Statement
-Alzheimer’s Disease is typically diagnosed only after noticeable cognitive decline. Existing clinical tests are often:
+In the project directory, you can run:
 
-- Infrequent  
-- Subjective  
-- Unable to capture subtle behavioral changes  
+### `npm start`
 
-There is a need for **continuous, data-driven cognitive monitoring** that can detect early signs of neurodegeneration.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
----
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-## Solution
-This platform introduces a **digital biomarker framework** that uses interactive tasks and AI analysis to detect neurocognitive decline earlier than traditional assessments.
+### `npm test`
 
-The system collects behavioral data from gamified cognitive tasks and processes it using machine learning models to generate a **Severity Index**, helping clinicians track disease progression over time.
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
----
+### `npm run build`
 
-## Key Features
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-### AI-Based Alzheimer’s Staging
-Machine learning models analyze behavioral patterns to estimate the stage of cognitive decline.
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-### Gamified Cognitive Testing
-Interactive spatial navigation tasks measure memory, attention, and decision-making ability.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### Digital Biomarker Extraction
-Extracts cognitive performance metrics such as:
-- Path efficiency
-- Navigation errors
-- Reaction time
-- Semantic fluency
+### `npm run eject`
 
-### Linguistic Analysis
-Natural Language Processing identifies subtle changes in speech and language patterns.
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-### Severity Index Dashboard
-Generates a longitudinal score that allows clinicians to track cognitive decline across sessions.
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-### Real-Time Data Processing
-Processes high-frequency behavioral data for accurate analysis.
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
----
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Project Architecture
+## Learn More
 
-### 1. Frontend Layer
-- Web or mobile interface
-- Gamified navigation tasks
-- Speech and text input collection
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-### 2. Backend Layer (Spring Boot)
-- REST APIs
-- User authentication
-- Session management
-- Data storage and retrieval
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-### 3. Data Processing Layer
-- Preprocessing of behavioral data
-- Feature extraction from navigation and linguistic data
+### Code Splitting
 
-### 4. Machine Learning Layer (Python)
-- Cognitive decline prediction models
-- Severity Index generation
-- Pattern detection in patient behavior
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### 5. Visualization Layer
-- Dashboard for clinicians
-- Patient progress tracking
-- Longitudinal cognitive analysis
+### Analyzing the Bundle Size
 
----
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-## Technology Stack
+### Making a Progressive Web App
 
-**Backend**
-- Spring Boot
-- Java
-- REST APIs
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-**Machine Learning**
-- Python
-- Scikit-learn
-- NumPy
-- Pandas
+### Advanced Configuration
 
-**Frontend**
-- React
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-**Database**
-- MySQL / PostgreSQL
+### Deployment
 
-**Data Analysis**
-- Natural Language Processing (NLP)
-- Behavioral analytics
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
----
+### `npm run build` fails to minify
 
-## How It Works
-
-1. The patient performs interactive cognitive tasks through the application.
-2. Behavioral and linguistic data are collected in real time.
-3. The backend stores and processes the session data.
-4. Machine learning models analyze cognitive patterns.
-5. The system generates a **Severity Index** and visual reports for clinicians.
-
----
-
-## Future Improvements
-
-- Integration with wearable devices
-- Voice-based cognitive analysis
-- Mobile application for remote monitoring
-- Deep learning models for improved prediction accuracy
-
----
-
-## Impact
-
-This project enables **earlier detection of Alzheimer’s Disease**, allowing clinicians to intervene sooner and personalize treatment strategies. By transforming passive monitoring into predictive diagnostics, the platform contributes to better long-term patient care.
-
----
-
-## License
-
-This project is released under the **MIT License**.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
