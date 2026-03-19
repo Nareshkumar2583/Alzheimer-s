@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Cognitive Test + History</title>
+
+<style>
+body {
+    font-family: Arial;
+    text-align: center;
+    background: #121212;
+    color: white;
+}
+
+input { padding: 8px; margin: 5px; }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 70px);
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.cell {
+    width: 70px;
+    height: 70px;
+    background: #ccc;
+    cursor: pointer;
+}
+
+.active { background: yellow; }
+.correct { background: green; }
+.wrong { background: red; }
+
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    background: white;
+    color: black;
+    border-radius: 10px;
+}
+
+/* TABLE */
+table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 90%;
+    background: white;
+    color: black;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    background: #333;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🧠 Alzheimer Detection Game + History</h2>
+
+<input type="number" id="age" placeholder="Age">
+<input type="number" id="apoe4" placeholder="APOE4 (0/1)">
+
+<br>
+<button onclick="startGame()">Start Game</button>
+<button onclick="clearHistory()">Clear History</button>
+
+<div class="grid" id="grid"></div>
+
+<div id="result" class="result"></div>
+
+<h3>📊 Test History</h3>
+<table id="historyTable">
+    <thead>
+        <tr>
+            <th>Age</th>
+            <th>Accuracy</th>
+            <th>Mistakes</th>
+            <th>Time</th>
+            <th>MMSE</th>
+            <th>Zone</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+
+let pattern = [];
+let userInput = [];
+let mistakes = 0;
+let startTime;
+const size = 16;
+
+// GRID
+function createGrid() {
+    const grid = document.getElementById("grid");
+    grid.innerHTML = "";
+
+    for (let i = 0; i < size; i++) {
+        let cell = document.createElement("div");
+        cell.classList.add("cell");
+        cell.onclick = () => handleClick(i, cell);
+        grid.appendChild(cell);
+    }
+}
+
+// START
+function startGame() {
+    createGrid();
+    pattern = [];
+    userInput = [];
+    mistakes = 0;
+    startTime = new Date();
+
+    for (let i = 0; i < 5; i++) {
+        pattern.push(Math.floor(Math.random() * size));
+    }
+
+    showPattern();
+}
+
+// SHOW PATTERN
+function showPattern() {
+    const cells = document.querySelectorAll(".cell");
+
+    pattern.forEach((index, i) => {
+        setTimeout(() => {
+            cells[index].classList.add("active");
+            setTimeout(() => {
+                cells[index].classList.remove("active");
+            }, 500);
+        }, i * 700);
+    });
+}
+
+// CLICK
+function handleClick(index, cell) {
+    userInput.push(index);
+
+    let step = userInput.length - 1;
+
+    if (pattern[step] === index) {
+        cell.classList.add("correct");
+    } else {
+        cell.classList.add("wrong");
+        mistakes++;
+    }
+
+    if (userInput.length === pattern.length) {
+        endGame();
+    }
+}
+
+// END GAME
+function endGame() {
+
+    const age = parseInt(document.getElementById("age").value);
+    const apoe4 = parseInt(document.getElementById("apoe4").value);
+
+    if (!age || (apoe4 !== 0 && apoe4 !== 1)) {
+        alert("Enter valid input");
+        return;
+    }
+
+    const timeTaken = (new Date() - startTime) / 1000;
+
+    let correct = 0;
+    for (let i = 0; i < pattern.length; i++) {
+        if (pattern[i] === userInput[i]) correct++;
+    }
+
+    const accuracy = (correct / pattern.length) * 100;
+
+    sendToBackend(age, apoe4, accuracy, mistakes, timeTaken);
+}
+
+// SEND API
+function sendToBackend(age, apoe4, accuracy, mistakes, timeTaken) {
+
+    const data = {
+        AGE: age,
+        APOE4: apoe4,
+        accuracy: accuracy,
+        mistakes: mistakes,
+        max_mistakes: 10,
+        time_taken: timeTaken,
+        max_time: 60,
+        learning_score: accuracy/10,
+        max_learning: 10
+    };
+
+    fetch("http://localhost:8080/api/predict", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(res => {
+        showResult(res);
+        saveToLocal(age, accuracy, mistakes, timeTaken, res);
+        loadHistory();
+    });
+}
+
+// SHOW RESULT
+function showResult(res) {
+
+    let color = "green";
+    if (res.zone === "MCI") color = "orange";
+    if (res.zone === "Alzheimer's") color = "red";
+
+    document.getElementById("result").innerHTML = `
+        <h2 style="color:${color}">${res.zone}</h2>
+        MMSE: ${res.mmse} <br>
+        Confidence: ${res.confidence}
+    `;
+}
+
+// SAVE LOCAL STORAGE
+function saveToLocal(age, accuracy, mistakes, time, res) {
+
+    let history = JSON.parse(localStorage.getItem("history")) || [];
+
+    history.push({
+        age,
+        accuracy: accuracy.toFixed(1),
+        mistakes,
+        time: time.toFixed(1),
+        mmse: res.mmse,
+        zone: res.zone
+    });
+
+    localStorage.setItem("history", JSON.stringify(history));
+}
+
+// LOAD TABLE
+function loadHistory() {
+
+    const tbody = document.querySelector("#historyTable tbody");
+    tbody.innerHTML = "";
+
+    let history = JSON.parse(localStorage.getItem("history")) || [];
+
+    history.forEach(h => {
+        let row = `
+            <tr>
+                <td>${h.age}</td>
+                <td>${h.accuracy}</td>
+                <td>${h.mistakes}</td>
+                <td>${h.time}</td>
+                <td>${h.mmse}</td>
+                <td>${h.zone}</td>
+            </tr>
+        `;
+        tbody.innerHTML += row;
+    });
+}
+
+// CLEAR
+function clearHistory() {
+    localStorage.removeItem("history");
+    loadHistory();
+}
+
+// INIT
+loadHistory();
+
+</script>
+
+</body>
+</html>
