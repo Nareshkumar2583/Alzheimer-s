@@ -1,0 +1,137 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 4px;
+}
+
+.cell {
+  position: relative;
+  aspect-ratio: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background  0.15s ease,
+    transform   0.15s ease,
+    box-shadow  0.15s ease;
+  overflow: hidden;
+}
+
+.cell:hover:not(:disabled) {
+  border-color: var(--border2);
+  background: #1e2d3f;
+}
+
+.cell:disabled {
+  cursor: default;
+}
+
+/* Inner glow dot */
+.inner {
+  position: absolute;
+  inset: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border2);
+  transition: all 0.15s ease;
+}
+
+/* ── active (lit) ── */
+.lit {
+  background: var(--accent-dim) !important;
+  border-color: var(--accent) !important;
+  box-shadow:
+    0 0 0 1px var(--accent),
+    0 0 20px var(--accent-glow),
+    inset 0 0 20px rgba(0, 212, 255, 0.08);
+  animation: cell-light 0.3s ease forwards;
+  cursor: pointer !important;
+}
+
+.lit .inner {
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+/* Pulse ring on lit cell */
+.ring {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  border: 2px solid var(--accent);
+  animation: pulse-ring 0.9s ease-out infinite;
+}
+
+/* ── correct hit ── */
+.hit {
+  background: var(--hit-dim) !important;
+  border-color: var(--hit) !important;
+  box-shadow:
+    0 0 0 1px var(--hit),
+    0 0 20px var(--hit-glow);
+  animation: cell-hit 0.35s ease forwards;
+}
+
+.hit .inner {
+  width: 12px;
+  height: 12px;
+  background: var(--hit);
+  box-shadow: 0 0 10px var(--hit);
+}
+
+/* ── wrong tap ── */
+.miss {
+  background: var(--miss-dim) !important;
+  border-color: var(--miss) !important;
+  box-shadow:
+    0 0 0 1px var(--miss),
+    0 0 16px var(--miss-glow);
+  animation: cell-miss 0.35s ease forwards;
+}
+
+.miss .inner {
+  width: 10px;
+  height: 10px;
+  background: var(--miss);
+}
+
+@keyframes cell-light {
+  0%   { transform: scale(0.88); }
+  55%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(1);   opacity: 0.9; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+@keyframes cell-hit {
+  0%   { transform: scale(1);    }
+  35%  { transform: scale(1.12); }
+  65%  { transform: scale(0.96); }
+  100% { transform: scale(1);    }
+}
+
+@keyframes cell-miss {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-5px); }
+  40%     { transform: translateX(5px); }
+  60%     { transform: translateX(-3px); }
+  80%     { transform: translateX(3px); }
+}
+
+.locked {
+  cursor: default;
+  pointer-events: none;
+}

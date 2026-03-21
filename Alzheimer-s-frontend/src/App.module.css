@@ -1,0 +1,566 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 32px 20px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background decorative grid lines */
+.bgGrid {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* All screens sit above the bg */
+.landing,
+.countdown,
+.gameArea,
+.resultArea,
+.reportArea {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560px;
+}
+
+/* ── LANDING ── */
+.landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding-top: 20px;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 8vw, 56px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  animation: float 4s ease-in-out infinite;
+}
+
+.logoAccent {
+  color: var(--accent);
+  text-shadow: 0 0 30px var(--accent-glow);
+}
+
+.tagline {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--text3);
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: -16px;
+}
+
+/* how it works */
+.howItWorks {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  background: var(--bg2);
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.5;
+  padding: 4px 0;
+}
+
+.stepNum {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 22px;
+  padding-top: 1px;
+}
+
+/* level selector */
+.levelSelect {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.selectLabel {
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: var(--text3);
+  text-transform: uppercase;
+  align-self: flex-start;
+}
+
+.levelBtns {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.lvlBtn {
+  flex: 1;
+  padding: 12px 0;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text2);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.15s ease;
+}
+
+.lvlBtn:hover {
+  border-color: var(--border2);
+  color: var(--text);
+}
+
+.lvlBtnActive {
+  background: var(--accent-dim) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.levelHint {
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+}
+
+/* profile section */
+.profileSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profileGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.fieldLabel {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--text3);
+  text-transform: uppercase;
+}
+
+.fieldInput {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  padding: 8px 10px;
+  font-size: 13px;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+
+.fieldInput:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+select.fieldInput {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%233d5a73'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+
+/* start button */
+.startBtn {
+  width: 100%;
+  padding: 18px;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius);
+  color: var(--bg);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+}
+
+.startBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.5);
+}
+
+.startBtn:active { transform: translateY(0); }
+
+.disclaimer {
+  font-size: 10px;
+  color: var(--text3);
+  text-align: center;
+  letter-spacing: 0.06em;
+}
+
+/* ── COUNTDOWN ── */
+.countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 16px;
+}
+
+.cdLevel {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--text3);
+  text-transform: uppercase;
+}
+
+.cdNum {
+  font-family: var(--font-display);
+  font-size: clamp(80px, 20vw, 140px);
+  font-weight: 800;
+  color: var(--accent);
+  text-shadow: 0 0 60px var(--accent-glow);
+  animation: fadeIn 0.3s ease;
+  line-height: 1;
+}
+
+.cdHint {
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+}
+
+/* ── GAME AREA ── */
+.gameArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.gridWrapper {
+  width: 100%;
+  padding: 4px;
+}
+
+.levelDots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border2);
+  transition: all 0.3s ease;
+}
+
+.dotActive {
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  width: 18px;
+  border-radius: 3px;
+}
+
+.dotDone {
+  background: var(--hit);
+}
+
+/* ── WATCH BANNER ── */
+.watchBanner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  background: var(--accent-dim);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.watchIcon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.watchText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.watchTitle {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+}
+
+.watchSub {
+  font-size: 11px;
+  color: var(--text2);
+}
+
+.seqBadge {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--accent);
+  text-align: center;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.seqBadge span {
+  display: block;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--text3);
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+
+/* ── RECALL PROGRESS DOTS ── */
+.recallProgress {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  width: 100%;
+  padding: 4px 0;
+}
+
+.seqDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border2);
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.seqDotActive {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+  transform: scale(1.3);
+}
+
+.seqDotDone {
+  background: var(--hit);
+  border-color: var(--hit);
+  box-shadow: 0 0 6px var(--hit-glow);
+}
+
+/* ── WATCH BANNER ── */
+.watchBanner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 520px;
+  background: var(--accent-dim);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  box-shadow: 0 0 20px var(--accent-glow);
+  animation: fadeIn 0.3s ease;
+}
+
+.watchIcon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.watchText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.watchTitle {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.watchSub {
+  font-size: 11px;
+  color: var(--text2);
+}
+
+.seqBadge {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--accent);
+  text-align: center;
+  line-height: 1;
+}
+
+.seqBadge span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--text3);
+  text-transform: uppercase;
+}
+
+/* ── RECALL PROGRESS DOTS ── */
+.recallProgress {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 520px;
+  padding: 4px 0;
+}
+
+.seqDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border2);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.seqDotDone {
+  background: var(--hit);
+  box-shadow: 0 0 6px var(--hit-glow);
+}
+
+.seqDotActive {
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+  transform: scale(1.4);
+}
+
+/* ── RESULT / REPORT ── */
+.resultArea,
+.reportArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+/* ── Phase banner (WATCHING / RECALLING) ── */
+.phaseBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  border: 1px solid;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.phaseBanner[data-phase="watch"] {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.phaseBanner[data-phase="recall"] {
+  background: var(--hit-dim);
+  border-color: var(--hit);
+  color: var(--hit);
+}
+
+.phaseIcon {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.phaseHint {
+  font-size: 10px;
+  opacity: 0.7;
+  letter-spacing: 0.1em;
+}
+
+.recallHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.recallProgress {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0 4px;
+}
+
+.recallCount {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.recallTimer {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--warn);
+}
