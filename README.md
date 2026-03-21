@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Quantifying Neurocognitive Decline
 
 ## Overview
@@ -133,3 +134,115 @@ This project enables **earlier detection of Alzheimer’s Disease**, allowing cl
 ## License
 
 This project is released under the **MIT License**.
+=======
+# CogniGrid — Cognitive Assessment Game
+
+A React + Vite frontend cognitive game that tests pattern recognition
+and sends aggregated performance data to a Flask ML backend for MMSE
+prediction and cognitive zone classification.
+
+## Project Structure
+
+```
+cognigrid/
+├── src/
+│   ├── hooks/
+│   │   └── useGameEngine.js     # All game logic + state machine
+│   ├── components/
+│   │   ├── Grid.jsx / .module.css      # The tap grid
+│   │   ├── HUD.jsx / .module.css       # Live stats during play
+│   │   ├── ResultCard.jsx / .module.css # Per-level result screen
+│   │   └── FinalReport.jsx / .module.css # Final session report + ML result
+│   ├── App.jsx / .module.css    # Screen router
+│   ├── main.jsx
+│   └── index.css                # Global design system
+├── app.py                       # Flask backend
+├── index.html
+├── vite.config.js
+└── package.json
+```
+
+## Setup
+
+### 1. Frontend
+
+```bash
+cd cognigrid
+npm install
+npm run dev
+# Opens at http://localhost:5173
+```
+
+### 2. Backend
+
+Place these model files (from data_processing_v5.py) in the same folder as app.py:
+- `scaler.pkl`
+- `xgb_model.pkl`
+- `model_meta.pkl`
+
+Then:
+
+```bash
+pip install flask flask-cors
+python app.py
+# Runs at http://localhost:5000
+```
+
+The Vite dev server proxies `/api/*` → `http://localhost:5000` automatically.
+
+## How it works
+
+### Game flow
+1. User selects 1–5 levels and enters their profile (age, education, APOE4)
+2. Countdown → grid appears → cells light up one by one
+3. Player taps each lit cell as fast as possible
+4. After each level → level result card (accuracy, errors, time, learning)
+5. After all levels → final report with aggregated stats
+
+### Level progression
+| Level | Grid | Targets | Lit duration | Speed |
+|-------|------|---------|-------------|-------|
+| 1 | 3×3 | 4  | 1200ms | Novice   |
+| 2 | 4×4 | 6  | 1000ms | Standard |
+| 3 | 4×4 | 8  | 800ms  | Advanced |
+| 4 | 5×5 | 10 | 700ms  | Expert   |
+| 5 | 5×5 | 12 | 550ms  | Elite    |
+
+### Payload sent to backend
+```json
+{
+  "AGE": 65,
+  "APOE4": 0,
+  "PTEDUCAT": 12,
+  "accuracy": 72,
+  "mistakes": 5,
+  "max_mistakes": 18,
+  "time_taken": 42,
+  "max_time": 55,
+  "learning_score": 8,
+  "max_learning": 18,
+  "levels_played": 3,
+  "level_breakdown": [...]
+}
+```
+
+All values are **aggregated across all levels** before sending.
+
+### Backend response
+```json
+{
+  "mmse": 22.4,
+  "zone": "MCI",
+  "confidence": "Clear",
+  "band": "Mild Cognitive Impairment (MCI)",
+  "advice": "Signs consistent with MCI. Recommend clinical assessment.",
+  "impairment": 0.463,
+  "clinical": {
+    "RAVLT_immediate": 23.7,
+    "ADAS13": 25.8,
+    "CDRSB": 3.5,
+    "FAQ": 10.2
+  }
+}
+```
+>>>>>>> 81cc09a (Frontend module)
