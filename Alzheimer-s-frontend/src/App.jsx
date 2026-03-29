@@ -6,7 +6,7 @@ import ResultCard   from './components/ResultCard'
 import FinalReport  from './components/FinalReport'
 import styles       from './App.module.css'
 
-export default function App() {
+export default function App({ onBack }) {
   const [selectedLevels, setSelectedLevels] = React.useState(3)
   const game = useGameEngine(selectedLevels)
   const { phase, PHASE } = game
@@ -18,6 +18,21 @@ export default function App() {
       {/* ── LANDING ── */}
       {phase === PHASE.IDLE && (
         <div className={styles.landing} style={{ animation: 'fadeIn 0.6s ease' }}>
+          {onBack && (
+            <button
+              onClick={onBack}
+              style={{
+                alignSelf: 'flex-start', background: 'transparent',
+                border: '1px solid var(--border)', borderRadius: '6px',
+                color: 'var(--text2)', fontSize: '12px', letterSpacing: '.08em',
+                padding: '6px 12px', cursor: 'pointer', marginBottom: '-8px',
+              }}
+              onMouseEnter={e => { e.target.style.borderColor='var(--accent)'; e.target.style.color='var(--accent)' }}
+              onMouseLeave={e => { e.target.style.borderColor='var(--border)';  e.target.style.color='var(--text2)' }}
+            >
+              ← Games
+            </button>
+          )}
           <div className={styles.logo}>
             <span className={styles.logoAccent}>COGNI</span>GRID
           </div>
